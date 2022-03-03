@@ -1,46 +1,39 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import Grid from '@mui/material/Grid';
 import TimeItem from "./TimeItem";
-
-
+import InputModal from './InputModal';
+import {ethers} from "ethers";
 function TimeGrid() {
-const [loadedItems, setLoadedItems] = React.useState(20);
-const settings = {
-      dots: true,
-      infinite: true,
-      speed: 300,
-      slidesToShow: 3,
-      autoplaySpeed:1000*60,
-      slidesToScroll: 1,
-      autoplay: true,
-      centerMode:true
-    };
+const [loadedItems, setLoadedItems] = React.useState(0);
+const [contract, setContract] = React.useState();
+const [inputModal, setInputModal] = React.useState(false);
+const [intValue, setIntValue] = React.useState();
+const [input, setInput] = React.useState("");
+useEffect(()=>{
+  (async function(){
+    var url = 'https://rpc-mumbai.matic.today';
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    let abi = ["function ownerOf(uint256 tokenId) external view returns (address owner)"];
+    let contract = new ethers.Contract("0xa1799389e8761229D44Bcac7adFD915c53E66022", abi, signer);
+    setContract(contract);
   
-  function time_convert(num)
- { 
-  const hours = Math.floor(num / 60);  
-  const minutes = num % 60;
-  return `${hours < 10 ? "0" + hours : hours}:${minutes <10 ? "0" + minutes : minutes }`;         
-}
+  })()
+},[loadedItems]);
 
-  const getArray = () => {
-    /*let orderedArr = Array.from(Array(1440).keys());
-    let now = new Date();
-    let hour = new Date(now).getHours();
-    let minutes = new Date(now).getMinutes();
-    let total = hour*60 + minutes;
-    let splittedPart = orderedArr.splice(total);
-    let result = [...splittedPart, ...orderedArr];
+  const getArray =() => {
+    
+    let items = [];
+    for(let i = loadedItems; i<loadedItems+20; ++i){
+      items.push(i);
+    }
 
-    console.log(result);
-    return result;*/
-    return Array.from(Array(loadedItems).keys());
+    return items;
   }
 
   const handleLoadMore = () => {
     setLoadedItems(prev => prev+20);
-    window.scrollTo(0,document.body.scrollHeight);
   }
   return (
   
@@ -48,14 +41,31 @@ const settings = {
       alignItems="center"
         justifyContent="center" 
           style={{width:"100%", textAlign:"right", padding:15, margin:0}}>
-                {getArray().map(item => <TimeItem intVal={item} key={item} />)}
+                {getArray().map(item => <TimeItem setInputModal={(id) => {
+                  setIntValue(id);
+                  setInputModal(true)
+                }} contract={contract} intVal={item} key={item} />)}
                    
       <Grid item xs={12} style={{width:"100%", textAlign:"center", padding:15, margin:0}}>
       <p onClick={handleLoadMore} style={{color:"white", textAlign:"right", marginRight:15, textDecoration:"underline", cursor:"pointer"}}>Load More...</p>
       </Grid>
 
       <Grid item xs={12} style={{width:"100%", textAlign:"center", padding:15, margin:0}}>
-        
+      <InputModal 
+      open={inputModal}
+      handleClose={()=>{
+          setInputModal(false); 
+      }}
+      input={input}
+      setInput={setInput}
+      handleMint={()=>{
+        console.log("input as MATIC is : ", input);
+        console.log("Tokenid is : ", intValue);
+        setInputModal(false); 
+        setInput("");
+      }} 
+      
+      />
       </Grid>
     </Grid>
   );
