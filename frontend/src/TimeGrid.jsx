@@ -3,7 +3,6 @@ import './App.css';
 import Grid from '@mui/material/Grid';
 import TimeItem from "./TimeItem";
 import InputModal from './InputModal';
-import {ethers} from "ethers";
 function TimeGrid() {
 const [loadedItems, setLoadedItems] = React.useState(0);
 const [contract, setContract] = React.useState();
@@ -12,12 +11,14 @@ const [intValue, setIntValue] = React.useState();
 const [input, setInput] = React.useState("");
 useEffect(()=>{
   (async function(){
-    var url = 'https://rpc-mumbai.matic.today';
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-    let abi = ["function ownerOf(uint256 tokenId) external view returns (address owner)"];
-    let contract = new ethers.Contract("0xa1799389e8761229D44Bcac7adFD915c53E66022", abi, signer);
-    setContract(contract);
+    // var url = 'https://rpc-mumbai.matic.today';
+    // const provider = new ethers.providers.Web3Provider(window.ethereum);
+    // const { chainId } = await provider.getNetwork()
+    // console.log(chainId) // 80001 => Mumbai / 137 => Polygon
+    // const signer = provider.getSigner();
+    // let abi = ["function ownerOf(uint256 tokenId) external view returns (address owner)"];
+    // let contract = new ethers.Contract("0xa1799389e8761229D44Bcac7adFD915c53E66022", abi, signer);
+    // setContract(contract);
   
   })()
 },[loadedItems]);

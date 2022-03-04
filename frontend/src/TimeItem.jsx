@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid';
 import {ownerOfFunction} from "./services/getData";
 
 function TimeItem({intVal, contract, setInputModal}) {
-    const [isOwned, setIsOwned] = useState(false);
+    const [isOwned, setIsOwned] = useState(true);
     const [loading, setLoading] = useState(true);
     
   function time_convert(num)
@@ -19,8 +19,11 @@ useEffect(()=>{
        let result;
        try{
            result =  await ownerOfFunction({contract, id: intVal});
-           result && setIsOwned(true);
-        }catch(error){}
+           if(result){
+            setIsOwned(true);
+           }
+           else setIsOwned(false);
+        }catch(error){setIsOwned(false);}
         setLoading(false);
     })()
 },[contract,intVal])
