@@ -319,7 +319,7 @@ contract TimeNFT is ERC721OwnerCheck,ReentrancyGuard, Ownable, Pausable {
     * @param tokenId token id
     * @return string onchain metadata
     */
-    function tokenURI(uint256 tokenId) override public pure returns (string memory) {
+    function tokenURI(uint256 tokenId) override public view returns (string memory) {
         string memory rarity="rare";
         string memory rarityAmount = "X";
         if(releaseDetails[tokenId].lockedAmount < 10 ether){
@@ -354,7 +354,7 @@ contract TimeNFT is ERC721OwnerCheck,ReentrancyGuard, Ownable, Pausable {
         require(tokenId >= 0 && tokenId < 1440, "Token ID invalid");
         require(msg.value >= salePrice, "Not enough fund");
         _safeMint(_msgSender(), tokenId);
-        uint256 ethersVal = (msg.value / 10**18) * 1 days;
+        uint256 ethersVal = block.timestamp + (msg.value / 10**18) * 1 days;
         releaseDetails[tokenId] = NFTDetails(msg.value,ethersVal);
     }
 
@@ -373,15 +373,23 @@ contract TimeNFT is ERC721OwnerCheck,ReentrancyGuard, Ownable, Pausable {
     {
         super._beforeTokenTransfer(from, to, tokenId);
     }
-
+    
     /**
     * @dev NFT holders can withdraw all their fund using this function
+    * @param _tokenId sender should be owner of this token
     * @return bool if user successfullt withdraw
     */
-    function withdrawNFT() external payable returns(bool){
-        require(releaseDetails[msg.sender].lockedAmount > 0 && releaseDetails[msg.sender].releaseDate > 0, "Invalid user");
-        require(block.timestamp > releaseDetails[msg.sender].releaseDate, "Too early to receive funds");
-        payable(msg.sender).transfer(releaseDetails[msg.sender].releaseDate);
+    function withdrawNFT(uint256 _tokenId) external payable returns(bool){
+        require(_tokenId >= 0 && _tokenId < 1440, "Token ID invalid");
+        require(ownerOf(_tokenId) == msg.sender, "You are not the owner of this NFT");
+        require(releaseDetails[_tokenId].lockedAmount > 0 && releaseDetails[_tokenId].releaseDate > 0, "Invalid user");
+        require(block.timestamp > releaseDetails[_tokenId].releaseDate, "Too early to receive funds");
+        uint256 value = releaseDetails[_tokenId].lockedAmount;
+        releaseDetails[_tokenId].lockedAmount = 0;
+        releaseDetails[_tokenId].releaseDate = 0;
+
+        payable(msg.sender).transfer(value);
+        
         return true;
     }
 
