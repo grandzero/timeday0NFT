@@ -20,6 +20,7 @@ export const init = async ( {setWalletAddress, setWalletNetwork, setWalletState}
       if (network == opcode_network) {
         setWalletNetwork(NETWORK)
       } else {
+        
         setWalletNetwork('no-'+NETWORK);
       }
     })

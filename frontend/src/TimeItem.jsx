@@ -1,12 +1,12 @@
-import React,{useEffect, useState} from 'react';
+import React,{useContext, useEffect, useState} from 'react';
 import './App.css';
 import Grid from '@mui/material/Grid';
 import {ownerOfFunction} from "./services/getData";
+import WalletContext from './WalletContext';
 
-function TimeItem({intVal, contract, setInputModal}) {
+function TimeItem({intVal, setInputModal}) {
     const [isOwned, setIsOwned] = useState(true);
-    const [loading, setLoading] = useState(true);
-    
+    const {walletState, contract} = useContext(WalletContext);
   function time_convert(num)
  {   
   const hours = Math.floor(num / 60);  
@@ -24,12 +24,12 @@ useEffect(()=>{
            }
            else setIsOwned(false);
         }catch(error){setIsOwned(false);}
-        setLoading(false);
+      
     })()
 },[contract,intVal])
    
   return (
-    <Grid onClick={()=>!isOwned && !loading && setInputModal(true)} style={{cursor:"pointer" ,padding:15, textAlign:"center", border:isOwned ? "1px solid grey" :"1px solid white" , borderRadius:10, margin:25}} item xs={2}>
+    <Grid onClick={()=>!isOwned && !walletState && setInputModal(true)} style={{cursor:"pointer" ,padding:15, textAlign:"center", border:isOwned ? "1px solid grey" :"1px solid white" , borderRadius:10, margin:25}} item xs={2}>
       <p style={{color:isOwned ? "grey" :"white"}}>{time_convert(intVal)}</p>
       
     </Grid>

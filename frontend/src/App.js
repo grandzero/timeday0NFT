@@ -31,9 +31,10 @@ function App() {
     <h1 style={{color:"white", fontSize:60, marginBottom:0, paddingBottom: 0}}>Tick... Tock...</h1>
     {
       walletState ? 
+      walletNetwork === process.env.REACT_APP_NETWORK ?
       <p 
         style={{color:"white", fontSize:30, marginBottom:0, paddingBottom: 0}}>{walletAddress}</p>
-      : walletNetwork === process.env.REACT_APP_NETWORK ? 
+      :  
       <p onClick={handleChangeNetwork} 
         style={{color:"white", fontSize:60, marginBottom:0, paddingBottom: 0, cursor:"pointer"}}>Change Network</p>
       :
