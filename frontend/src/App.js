@@ -5,7 +5,7 @@ import TimeGrid from "./TimeGrid.jsx";
 import moment from "moment";
 import WalletContext from "./WalletContext";
 import { switchChain, connectWallet } from './services/wallet';
-// 0xa1799389e8761229D44Bcac7adFD915c53E66022
+// 0xf9FBd415194B35c0D7f57241a3c27879395ee6c9
 
 function App() {
   const {walletAddress,walletNetwork, walletState, setWalletAddress, setWalletNetwork, setWalletState} = useContext(WalletContext);

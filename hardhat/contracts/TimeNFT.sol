@@ -322,19 +322,19 @@ contract TimeNFT is ERC721OwnerCheck,ReentrancyGuard, Ownable, Pausable {
     function tokenURI(uint256 tokenId) override public view returns (string memory) {
         string memory rarity="rare";
         string memory rarityAmount = "X";
-        if(releaseDetails[tokenId].lockedAmount < 10 ether){
+        if(releaseDetails[tokenId].lockedAmount < salePrice * 10 ether){
             rarity = "common";
             rarityAmount = "X";
-        }else if (releaseDetails[tokenId].lockedAmount < 50 ether){
+        }else if (releaseDetails[tokenId].lockedAmount < salePrice * 50 ether){
             rarity = "uncommon";
             rarityAmount = "XX";
-        }else if (releaseDetails[tokenId].lockedAmount < 100 ether){
+        }else if (releaseDetails[tokenId].lockedAmount < salePrice * 100 ether){
             rarity = "rare";
             rarityAmount = "XX";
-        }else if (releaseDetails[tokenId].lockedAmount < 1000 ether){
+        }else if (releaseDetails[tokenId].lockedAmount < salePrice * 1000 ether){
             rarity = "epic";
             rarityAmount = "XXX";
-        }else if (releaseDetails[tokenId].lockedAmount < 10000 ether){
+        }else if (releaseDetails[tokenId].lockedAmount <  salePrice * 10000 ether){
             rarity = "legendary";
             rarityAmount = "XXXX";
         }
