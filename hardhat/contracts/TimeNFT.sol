@@ -339,7 +339,7 @@ contract TimeNFT is ERC721OwnerCheck,ReentrancyGuard, Ownable, Pausable {
             rarityAmount = "XXXX";
         }
         string memory output = getSvgForValue(tokenId);
-        string memory json = Base64.encode(bytes(string(abi.encodePacked('{"name": "Time ',tokenId.toString(),'"','"description": "The most valuable thing in the entire world", "image": "data:image/svg+xml;base64,', Base64.encode(bytes(output)), '", attributes:[{"trait_type":"Rarity","Value":"',rarity,'"},{"trait_type":"Rarity Amount","Value":"',rarityAmount,'"}]}'))));
+        string memory json = Base64.encode(bytes(string(abi.encodePacked('{"name": "Time ',tokenId.toString(),'",','"description": "The most valuable thing in the entire world", "image": "data:image/svg+xml;base64,', Base64.encode(bytes(output)), '", "attributes":[{"trait_type":"Rarity","value":"',rarity,'"},{"trait_type":"Rarity Amount","value":"',rarityAmount,'"}]}'))));
         output = string(abi.encodePacked('data:application/json;base64,', json));
 
         return output;

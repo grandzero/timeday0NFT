@@ -11,7 +11,7 @@ export default function InputModal({setInput, handleMint, open, handleClose, inp
 
   return (
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Mint With Your Price</DialogTitle>
+        <DialogTitle >Mint With Your Price</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Enter your price below. Don't forget. This price will define your rarity and will be investment for your future !
@@ -30,7 +30,7 @@ export default function InputModal({setInput, handleMint, open, handleClose, inp
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={()=>handleClose()}>Cancel</Button>
+          <Button onClick={()=>{setInput("");handleClose()}}>Cancel</Button>
           <Button onClick={handleMint}>Subscribe</Button>
         </DialogActions>
       </Dialog>

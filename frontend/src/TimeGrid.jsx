@@ -3,25 +3,24 @@ import './App.css';
 import Grid from '@mui/material/Grid';
 import TimeItem from "./TimeItem";
 import InputModal from './InputModal';
+import WalletContext from './WalletContext';
+import {ethers} from "ethers";
+
+const {Web3} = window;
+
 function TimeGrid() {
 const [loadedItems, setLoadedItems] = React.useState(0);
-const [contract, setContract] = React.useState();
 const [inputModal, setInputModal] = React.useState(false);
 const [intValue, setIntValue] = React.useState();
 const [input, setInput] = React.useState("");
+const {contract, walletAddress} = React.useContext(WalletContext);
 useEffect(()=>{
   (async function(){
-    // var url = 'https://rpc-mumbai.matic.today';
-    // const provider = new ethers.providers.Web3Provider(window.ethereum);
-    // const { chainId } = await provider.getNetwork()
-    // console.log(chainId) // 80001 => Mumbai / 137 => Polygon
-    // const signer = provider.getSigner();
-    // let abi = ["function ownerOf(uint256 tokenId) external view returns (address owner)"];
-    // let contract = new ethers.Contract("0xa1799389e8761229D44Bcac7adFD915c53E66022", abi, signer);
-    // setContract(contract);
+    let result = await contract.methods.tokenURI(2).call();
+    console.log(result);
   
   })()
-},[loadedItems]);
+},[]);
 
   const getArray =() => {
     
@@ -45,7 +44,7 @@ useEffect(()=>{
                 {getArray().map(item => <TimeItem setInputModal={(id) => {
                   setIntValue(id);
                   setInputModal(true)
-                }} contract={contract} intVal={item} key={item} />)}
+                }} intVal={item} key={item} />)}
                    
       <Grid item xs={12} style={{width:"100%", textAlign:"center", padding:15, margin:0}}>
       <p onClick={handleLoadMore} style={{color:"white", textAlign:"right", marginRight:15, textDecoration:"underline", cursor:"pointer"}}>Load More...</p>
@@ -60,6 +59,10 @@ useEffect(()=>{
       input={input}
       setInput={setInput}
       handleMint={()=>{
+        const web3 = new Web3(window.ethereum);
+        (async function(){
+          await contract.methods.claim(intValue).send({value: ethers.utils.parseEther(input), from:walletAddress});
+        })()
         console.log("input as MATIC is : ", input);
         console.log("Tokenid is : ", intValue);
         setInputModal(false); 

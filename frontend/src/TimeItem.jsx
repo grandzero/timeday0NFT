@@ -29,7 +29,7 @@ useEffect(()=>{
 },[contract,intVal])
    
   return (
-    <Grid onClick={()=>!isOwned && !walletState && setInputModal(true)} style={{cursor:"pointer" ,padding:15, textAlign:"center", border:isOwned ? "1px solid grey" :"1px solid white" , borderRadius:10, margin:25}} item xs={2}>
+    <Grid onClick={()=>!isOwned && walletState && setInputModal(intVal)} style={{cursor:"pointer" ,padding:15, textAlign:"center", border:isOwned ? "1px solid grey" :"1px solid white" , borderRadius:10, margin:25}} item xs={2}>
       <p style={{color:isOwned ? "grey" :"white"}}>{time_convert(intVal)}</p>
       
     </Grid>
