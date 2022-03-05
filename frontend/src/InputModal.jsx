@@ -8,7 +8,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 export default function InputModal({setInput, handleMint, open, handleClose, input}) {
-
+    
   return (
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle >Mint With Your Price</DialogTitle>
@@ -31,7 +31,7 @@ export default function InputModal({setInput, handleMint, open, handleClose, inp
         </DialogContent>
         <DialogActions>
           <Button onClick={()=>{setInput("");handleClose()}}>Cancel</Button>
-          <Button onClick={handleMint}>Subscribe</Button>
+          <Button onClick={handleMint}>Mint</Button>
         </DialogActions>
       </Dialog>
   );

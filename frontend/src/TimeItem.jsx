@@ -3,9 +3,10 @@ import './App.css';
 import Grid from '@mui/material/Grid';
 import {ownerOfFunction} from "./services/getData";
 import WalletContext from './WalletContext';
-
+import { CircularProgress } from '@mui/material';
 function TimeItem({intVal, setInputModal}) {
     const [isOwned, setIsOwned] = useState(true);
+    const [loading, setLoading] = useState(false);
     const {walletState, contract} = useContext(WalletContext);
   function time_convert(num)
  {   
@@ -15,7 +16,7 @@ function TimeItem({intVal, setInputModal}) {
 }
 
 useEffect(()=>{
-    (async function(){
+    !loading && (async function(){
        let result;
        try{
            result =  await ownerOfFunction({contract, id: intVal});
@@ -26,11 +27,15 @@ useEffect(()=>{
         }catch(error){setIsOwned(false);}
       
     })()
-},[contract,intVal])
-   
+},[contract,intVal, loading])
   return (
-    <Grid onClick={()=>!isOwned && walletState && setInputModal(intVal)} style={{cursor:"pointer" ,padding:15, textAlign:"center", border:isOwned ? "1px solid grey" :"1px solid white" , borderRadius:10, margin:25}} item xs={2}>
-      <p style={{color:isOwned ? "grey" :"white"}}>{time_convert(intVal)}</p>
+    <Grid onClick={()=>{
+      if(!isOwned && walletState && !loading){
+        setInputModal({value: intVal, loadingTrue: () => setLoading(true), loadingFalse: ()=> setLoading(false)});
+      }
+    }
+      } style={{cursor:"pointer" ,padding:15, textAlign:"center", border:isOwned ? "1px solid grey" :"1px solid white" , borderRadius:10, margin:25}} item xs={2}>
+      <p style={{color:isOwned ? "grey" :"white"}}>{loading ? <CircularProgress/> : time_convert(intVal)}</p>
       
     </Grid>
   );

@@ -337,6 +337,9 @@ contract TimeNFT is ERC721OwnerCheck,ReentrancyGuard, Ownable, Pausable {
         }else if (releaseDetails[tokenId].lockedAmount <  salePrice * 10000 ether){
             rarity = "legendary";
             rarityAmount = "XXXX";
+        }else{
+            rarity = "godlike";
+            rarityAmount = "XXXXX";
         }
         string memory output = getSvgForValue(tokenId);
         string memory json = Base64.encode(bytes(string(abi.encodePacked('{"name": "Time ',tokenId.toString(),'",','"description": "The most valuable thing in the entire world", "image": "data:image/svg+xml;base64,', Base64.encode(bytes(output)), '", "attributes":[{"trait_type":"Rarity","value":"',rarity,'"},{"trait_type":"Rarity Amount","value":"',rarityAmount,'"}]}'))));

@@ -14,13 +14,14 @@ const [inputModal, setInputModal] = React.useState(false);
 const [intValue, setIntValue] = React.useState();
 const [input, setInput] = React.useState("");
 const {contract, walletAddress} = React.useContext(WalletContext);
-useEffect(()=>{
-  (async function(){
-    let result = await contract.methods.tokenURI(2).call();
-    console.log(result);
+// useEffect(()=>{
+//   (async function(){
+//     let result = await contract.methods.tokenURI(2).call();
+//     console.log(result);
   
-  })()
-},[]);
+//   })()
+// },[]);
+
 
   const getArray =() => {
     
@@ -41,7 +42,7 @@ useEffect(()=>{
       alignItems="center"
         justifyContent="center" 
           style={{width:"100%", textAlign:"right", padding:15, margin:0}}>
-                {getArray().map(item => <TimeItem setInputModal={(id) => {
+                {getArray().map(item => <TimeItem  setInputModal={(id) => {
                   setIntValue(id);
                   setInputModal(true)
                 }} intVal={item} key={item} />)}
@@ -54,17 +55,19 @@ useEffect(()=>{
       <InputModal 
       open={inputModal}
       handleClose={()=>{
-          setInputModal(false); 
+          setInputModal(false);
+          intValue.loadingFalse(); 
       }}
       input={input}
       setInput={setInput}
       handleMint={()=>{
-        const web3 = new Web3(window.ethereum);
         (async function(){
-          await contract.methods.claim(intValue).send({value: ethers.utils.parseEther(input), from:walletAddress});
+          intValue.loadingTrue()
+        
+          let tx = await contract.methods.claim(intValue.value).send({value: ethers.utils.parseEther(input), from:walletAddress});
+          intValue.loadingFalse(false);
+          console.log(tx)
         })()
-        console.log("input as MATIC is : ", input);
-        console.log("Tokenid is : ", intValue);
         setInputModal(false); 
         setInput("");
       }} 
