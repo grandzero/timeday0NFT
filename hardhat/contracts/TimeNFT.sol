@@ -398,7 +398,7 @@ contract TimeNFT is ERC721OwnerCheck,ReentrancyGuard, Ownable, Pausable {
 
   
 
-    constructor(uint256 _price) ERC721OwnerCheck("Day ZERO", "TIME") Ownable() {
+    constructor(uint256 _price) ERC721OwnerCheck("Day ZERO", "TIMED0") Ownable() {
         salePrice = _price;
     }
 }
