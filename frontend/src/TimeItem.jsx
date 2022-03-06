@@ -16,7 +16,7 @@ function TimeItem({intVal, setInputModal}) {
 }
 
 useEffect(()=>{
-    !loading && (async function(){
+    (async function(){
        let result;
        try{
            result =  await ownerOfFunction({contract, id: intVal});
@@ -27,7 +27,7 @@ useEffect(()=>{
         }catch(error){setIsOwned(false);}
       
     })()
-},[contract,intVal, loading])
+},[contract,intVal, loading, setInputModal])
   return (
     <Grid onClick={()=>{
       if(!isOwned && walletState && !loading){

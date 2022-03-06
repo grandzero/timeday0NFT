@@ -1,12 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './App.css';
 import Grid from '@mui/material/Grid';
 import TimeItem from "./TimeItem";
 import InputModal from './InputModal';
 import WalletContext from './WalletContext';
 import {ethers} from "ethers";
-
-const {Web3} = window;
 
 function TimeGrid() {
 const [loadedItems, setLoadedItems] = React.useState(0);
@@ -64,9 +62,15 @@ const {contract, walletAddress} = React.useContext(WalletContext);
         (async function(){
           intValue.loadingTrue()
         
-          let tx = await contract.methods.claim(intValue.value).send({value: ethers.utils.parseEther(input), from:walletAddress});
-          intValue.loadingFalse(false);
-          console.log(tx)
+          try{
+            await contract.methods.claim(intValue.value).send({value: ethers.utils.parseEther(input), from:walletAddress});
+            intValue.loadingFalse(false);
+          }catch(error){
+            console.log(error);
+            intValue.loadingFalse(false);
+          }
+          
+          //window.location.reload();
         })()
         setInputModal(false); 
         setInput("");

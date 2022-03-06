@@ -1,11 +1,11 @@
-import React,{useContext, useEffect, useState} from 'react';
+import React,{useContext} from 'react';
 import './App.css';
 import FAQSection from './FAQSection';
 import TimeGrid from "./TimeGrid.jsx";
 import moment from "moment";
 import WalletContext from "./WalletContext";
 import { switchChain, connectWallet } from './services/wallet';
-// 0x71D8bD7941005a86f5b33a602b097f9e7eb809e5
+// 0x05e6a9a99845697fAc5b7A2BF07C6C0541951fBC
 
 function App() {
   const {walletAddress,walletNetwork, walletState, setWalletAddress, setWalletNetwork, setWalletState} = useContext(WalletContext);
