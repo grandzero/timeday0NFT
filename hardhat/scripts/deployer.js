@@ -15,7 +15,7 @@ async function main() {
 
   // We get the contract to deploy
   const TimeNFT = await hre.ethers.getContractFactory("TimeNFT");
-  const time = await TimeNFT.deploy(hre.ethers.utils.parseEther("0.01"));
+  const time = await TimeNFT.deploy(hre.ethers.utils.parseEther("1.0"));
 
   await time.deployed();
 
