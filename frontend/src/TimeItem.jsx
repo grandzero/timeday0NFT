@@ -24,7 +24,7 @@ useEffect(()=>{
             setIsOwned(true);
            }
            else setIsOwned(false);
-        }catch(error){setIsOwned(false);}
+        }catch(error){setIsOwned(false); console.log(error)}
       
     })()
 },[contract,intVal, loading, setInputModal])

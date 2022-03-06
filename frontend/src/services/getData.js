@@ -12,7 +12,7 @@ export async function getPageDetails(contract,page){
     return items;
 }
 export async function ownerOfFunction({contract, id}){
-    return await contract.methods.isOwned(id).call();
+    return await contract.isOwned(id);
 }
 
 // async function changeNetwork(){

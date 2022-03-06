@@ -79,7 +79,8 @@ export const switchChain = async () => {
 
 export const checkConnection = async ( {setWalletAddress, setWalletNetwork, setWalletState} ) => {
   // Check if browser is running Metamask
-  let web3
+  let web3;
+
   if (window.ethereum) {
     web3 = new Web3(window.ethereum)
 

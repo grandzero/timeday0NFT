@@ -63,7 +63,9 @@ const {contract, walletAddress} = React.useContext(WalletContext);
           intValue.loadingTrue()
         
           try{
-            await contract.methods.claim(intValue.value).send({value: ethers.utils.parseEther(input), from:walletAddress});
+            let tx = await contract.claim(intValue.value,{value:ethers.utils.parseEther(input)})
+            let receipt = await tx.wait();
+            //await contract.methods.claim(intValue.value).send({value: ethers.utils.parseEther(input), from:walletAddress});
             intValue.loadingFalse(false);
           }catch(error){
             console.log(error);

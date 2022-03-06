@@ -70,7 +70,7 @@ export default function FAQSection() {
         </AccordionSummary>
         <AccordionDetails>
           <p>
-            Name your price ! But be careful, it should be over 1 ONE. If you pay lower then 10x more then min price(1 ONE) your NFT will be common, if greater then 10x and lower then 50x it will be uncommon, if between 50x and 100x it will be rare, if between 100x and 1000x it will be epic, if between 1000x and 10000x it will be legendary, if bigger then 10000x it's rarity will be godlike.
+            Name your price ! But be careful, it should be over 1 MATIC. If you pay lower then 10x more then min price(1 MATIC) your NFT will be common, if greater then 10x and lower then 50x it will be uncommon, if between 50x and 100x it will be rare, if between 100x and 1000x it will be epic, if between 1000x and 10000x it will be legendary, if bigger then 10000x it's rarity will be godlike.
           </p>
         </AccordionDetails>
       </Accordion>
@@ -80,7 +80,7 @@ export default function FAQSection() {
         </AccordionSummary>
         <AccordionDetails>
           <p>
-            You can mint with any price above minimum minting price which is 1 ONE. BUT, your NFT will represent your investment amount and vesting time. Once you send your fund to contract, amount of value will decide your NFT's rarity, rank and how long your fund will stake. For every 1 ONE, your fund will be staked for 1 day. Once your stake time completed, you can get your fund back. If you believe in cryptos and ONE ecosystems growth, you can stake your coins and once you withdraw at end of vesting time, you will still have your NFT !
+            You can mint with any price above minimum minting price which is 1 MATIC. BUT, your NFT will represent your investment amount and vesting time. Once you send your fund to contract, amount of value will decide your NFT's rarity, rank and how long your fund will stake. For every 1 MATIC, your fund will be staked for 1 day. Once your stake time completed, you can get your fund back. If you believe in cryptos and MATIC ecosystems growth, you can stake your coins and once you withdraw at end of vesting time, you will still have your NFT !
           </p>
         </AccordionDetails>
       </Accordion>

@@ -1,6 +1,7 @@
 import {useState, useEffect, createContext} from 'react';
 import {init, checkConnection} from "./services/wallet";
 import abi from "./abi/TimeNFT";
+import { ethers } from 'ethers';
 const {Web3} = window;
 const WalletContext = createContext(null);
 
@@ -21,11 +22,15 @@ export const WalletProvider = ({children}) => {
     useEffect(()=>{
         (async function(){
             if(walletAddress.split("") !== ""){
-                const web3 = new Web3(window.ethereum);
+                // const web3 = new Web3(window.ethereum);
                 
-                let cont = new web3.eth.Contract(abi,process.env.REACT_APP_CONTRACT_ADDR);
-                
-                setContract(cont);
+                // let cont = new web3.eth.Contract(abi,process.env.REACT_APP_CONTRACT_ADDR);
+                // console.log(cont);
+                const newAbi = ["function isOwned(uint256 _id) external view returns(bool)", "function claim(uint256 tokenId) public payable"];
+                const provider = new ethers.providers.Web3Provider(window.ethereum);
+                const signer = provider.getSigner();
+                const contract = new ethers.Contract(process.env.REACT_APP_CONTRACT_ADDR, newAbi, signer);
+                setContract(contract);
             }
         })()
     },[walletAddress])

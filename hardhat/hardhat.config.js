@@ -33,10 +33,6 @@ module.exports = {
   },
   networks: {
     hardhat: {
-      forking: {
-        //url: "https://eth-mainnet.alchemyapi.io/v2/process.env.ALCHEMY_MAINNET_KEY",
-        url: "https://polygon-mumbai.g.alchemy.com/v2/"+process.env.ALCHEMY_MUMBAI_KEY
-      },
       accounts:{
         count:100,
         accountsBalance: "100000000000000000000000"
@@ -47,7 +43,7 @@ module.exports = {
       accounts:[process.env.PRIVATE_KEY]
     },
     matic: {
-      url: "https://rpc-mumbai.maticvigil.com",
+      url: "https://polygon-mainnet.g.alchemy.com/v2/"+ process.env.ALCHEMY_MATIC_KEY,
       accounts: [process.env.PRIVATE_KEY]
     }
   }
